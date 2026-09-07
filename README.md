@@ -1,429 +1,314 @@
-Movie Ticket Booking System
+MOVIE TICKET BOOKING SYSTEM
+============================
 
-A simple console-based Movie Ticket Booking System in C++, developed as part of the TCS-504 System Design Assignment – 1.
+A simple console-based Movie Ticket Booking System in C++, developed as part of the TCS-504 System Design Assignment - 1.
 
-The project demonstrates Object-Oriented Programming, UML-based system design, SOLID principles, class relationships, booking management, payment processing, and input validation in a small single-cinema environment.
+This project demonstrates Object-Oriented Programming, UML-based system design, SOLID principles, class relationships, booking management, payment processing, input validation, and modular C++ development in a small, single-cinema environment.
 
-📌 Features
-🎥 View currently playing movies
-🕐 View shows for a selected movie
-💺 Display seat layout and availability
-🎟️ Book one or more seats
-🚫 Prevent booking of already-booked seats
-💰 Calculate ticket price according to seat type
-💳 Pay using UPI, Card, or Cash
-🧾 Generate and print tickets
-❌ Cancel bookings and release seats
-⚠️ Handle invalid inputs safely
-🔄 Release selected seats when payment fails
-💰 Seat Pricing
-Seat Type	Price
-Silver	₹150
-Gold	₹250
-Platinum	₹400
-🏗️ System Architecture
+FEATURES
+--------
+- View currently playing movies
+- View shows for a selected movie
+- Display seat layout and availability
+- Book one or more seats
+- Prevent booking of already-booked seats
+- Calculate ticket prices according to seat type
+- Pay using UPI, Card, or Cash
+- Generate and print tickets
+- Cancel bookings and release seats
+- Handle invalid inputs safely
+- Release selected seats when payment fails
 
-The main booking workflow is:
+SEAT PRICING
+------------
+Silver: INR 150
+Gold: INR 250
+Platinum: INR 400
 
-Customer
-   ↓
-BookingService
-   ↓
-Movie → Show → Screen → Seat
-                ↓
-             ShowSeat
-                ↓
-        PriceCalculator
-                ↓
-             Payment
-           ↙    ↓    ↘
-         UPI   Card   Cash
-                ↓
-             Booking
-                ↓
-          TicketPrinter
-
-BookingService coordinates the overall booking process, while individual classes handle specific responsibilities such as movie management, seat management, pricing, payment, booking, and ticket printing.
-
-📊 UML & Design Diagrams
-
-The project includes UML and design diagrams that explain the system from requirements to implementation.
-
-1. Functional Requirements
-
-The functional requirements describe the main operations provided by the system:
-
-View currently playing movies
-View shows for a selected movie
-View seat availability
-Book one or more seats
-Calculate ticket price
-Make payment
-Print ticket
-Cancel booking
-2. Non-Functional Requirements
-
-The system focuses on the following quality requirements:
-
-Modularity – Separate classes with clear responsibilities
-Extensibility – New payment methods can be added easily
-Input Validation – Invalid inputs are handled safely
-Maintainability – Meaningful names and organized responsibilities
-Usability – Simple menu-driven console interface
-3. Noun–Verb Analysis
-
-Noun–verb analysis is used to identify important classes and operations from the problem statement.
-
-Nouns → Classes
-Movie
-Show
-Seat
-Screen
-Cinema
-ShowSeat
-Customer
-Booking
-Payment
-PriceCalculator
-TicketPrinter
-BookingService
-Verbs → Methods / Operations
-Book
-Pay
-Cancel
-Calculate
-Print
-Display
-Select
-Release
-
-This analysis helps determine what the system objects represent and what responsibilities should be assigned to each class.
-
-🧩 Class Diagram
-
-The class diagram represents the overall static structure of the system.
-
-It contains:
-
-Classes and their attributes
-Methods and visibility
-Multiplicities
-Class relationships
-Abstract Payment class
-Payment inheritance hierarchy
-Major Relationships
-Relationship	Classes
-Composition	Cinema → Screen
-Composition	Screen → Seat
-Composition	Show → ShowSeat
-Aggregation	Show → Movie
-Association	Show → Screen
-Association	Booking → Customer
-Aggregation	Booking → ShowSeat
-Association	Booking → Payment
-Inheritance	Payment → UPI / Card / Cash
-
-The class diagram provides a structural view of how the different objects interact with each other.
-
-🔄 Sequence Diagram
-
-The sequence diagram represents the interaction when a customer books a seat and pays using UPI.
+SYSTEM ARCHITECTURE
+-------------------
 
 Customer
-   ↓
+   |
 BookingService
-   ↓
-Show
-   ↓
-ShowSeat
-   ↓
-PriceCalculator
-   ↓
-Payment
-   ↓
-Booking
-   ↓
-TicketPrinter
-Booking Sequence
-1. Customer selects a show
-2. BookingService checks available seats
-3. Customer selects seat(s)
-4. ShowSeat availability is validated
-5. PriceCalculator calculates total price
-6. Booking is created
-7. UPI payment is created
-8. Payment is processed
-9. Seats are booked
-10. Booking is confirmed
-11. Ticket is printed
+   |
+Movie -> Show -> Screen -> Seat
+                       |
+                    ShowSeat
+                       |
+                PriceCalculator
+                       |
+                    Payment
+                 /      |      \
+               UPI     Card     Cash
+                       |
+                    Booking
+                       |
+                 TicketPrinter
+
+BookingService coordinates the overall booking process. Individual classes handle movie management, seat management, pricing, payment, booking, and ticket printing.
+
+UML AND DESIGN DIAGRAMS
+-----------------------
+
+FUNCTIONAL REQUIREMENTS
+- View currently playing movies
+- View shows for a selected movie
+- View seat availability
+- Book one or more seats
+- Calculate ticket price
+- Make payment
+- Print ticket
+- Cancel booking
+
+NON-FUNCTIONAL REQUIREMENTS
+- Modularity: Separate classes with clear responsibilities
+- Extensibility: New payment methods can be added easily
+- Input Validation: Invalid inputs are handled safely
+- Maintainability: Meaningful names and organized responsibilities
+- Usability: Simple menu-driven console interface
+
+NOUN-VERB ANALYSIS
+------------------
+
+Nouns / Classes:
+Movie, Show, Seat, Screen, Cinema, ShowSeat, Customer, Booking, Payment, PriceCalculator, TicketPrinter, BookingService
+
+Verbs / Methods or Operations:
+Book, Pay, Cancel, Calculate, Print, Display, Select, Release
+
+CLASS DIAGRAM
+-------------
+
+Major relationships:
+- Composition: Cinema -> Screen
+- Composition: Screen -> Seat
+- Composition: Show -> ShowSeat
+- Aggregation: Show -> Movie
+- Association: Show -> Screen
+- Association: Booking -> Customer
+- Aggregation: Booking -> ShowSeat
+- Association: Booking -> Payment
+- Inheritance: Payment -> UPI / Card / Cash
+
+The class diagram represents classes, attributes, methods, visibility, multiplicities, and relationships. Payment is an abstract class with UPI, Card, and Cash implementations.
+
+SEQUENCE DIAGRAM
+----------------
+
+Customer -> BookingService -> Show -> ShowSeat -> PriceCalculator -> Payment -> Booking -> TicketPrinter
+
+BOOKING SEQUENCE
+1. Customer selects a show.
+2. BookingService checks available seats.
+3. Customer selects one or more seats.
+4. ShowSeat availability is validated.
+5. PriceCalculator calculates the total price.
+6. A booking is created.
+7. A payment object is created.
+8. Payment is processed.
+9. Seats are booked.
+10. Booking is confirmed.
+11. Ticket is printed.
 
 If payment fails, the selected seats are released and the booking is not confirmed.
 
-🔗 Relationship Table
+RELATIONSHIP ANALYSIS
+---------------------
 
-The system uses different UML relationships based on ownership and object lifetime.
+Composition:
+- Cinema owns its screens.
+- Physical seats belong to a screen.
+- ShowSeat exists specifically for a particular show.
 
-Composition
+Aggregation:
+- A movie can exist independently of a particular show.
+- A booking references selected show seats but does not own their lifetime.
 
-Cinema → Screen
+Association:
+- A booking is associated with a customer.
+- A booking uses a payment object to complete payment.
 
-A cinema owns its screens.
+Inheritance:
+UPIPayment, CardPayment, and CashPayment inherit from the abstract Payment class.
 
-Screen → Seat
+OOP CONCEPTS USED
+-----------------
 
-Physical seats belong to a screen.
+- Encapsulation: Data members are private and accessed through public methods.
+- Abstraction: The abstract Payment class defines a common payment contract.
+- Inheritance: Payment types inherit from the Payment class.
+- Runtime Polymorphism: Payment types are processed through a common interface using virtual functions.
+- Compile-Time Polymorphism: Constructor overloading demonstrates compile-time polymorphism.
+- Static Members: A static booking counter generates unique booking IDs.
+- this Keyword: The this pointer refers to the current object.
+- Composition: Cinema -> Screen -> Seat and Show -> ShowSeat.
+- Aggregation: Show -> Movie and Booking -> ShowSeat.
+- Association: Classes interact without owning one another's lifetime.
 
-Show → ShowSeat
-
-ShowSeat exists specifically for a particular show.
-
-Aggregation
-
-Show → Movie
-
-A movie can exist independently of a particular show.
-
-Booking → ShowSeat
-
-A booking references selected show seats but does not own their lifetime.
-
-Association
-
-Booking → Customer
-
-A booking is associated with a customer.
-
-Booking → Payment
-
-A booking uses a payment object to complete payment.
-
-Inheritance
-              Payment
-             /   |   \
-           UPI  Card  Cash
-
-UpiPayment, CardPayment, and CashPayment are specialized payment implementations.
-
-🧠 OOP Concepts Used
-Encapsulation
-
-Data members are kept private and accessed through public methods.
-
-Abstraction
-
-The abstract Payment class defines the common payment contract.
-
-Inheritance
-
-UpiPayment, CardPayment, and CashPayment inherit from Payment.
-
-Runtime Polymorphism
-
-Different payment types can be processed through the common Payment interface using virtual functions.
-
-Compile-Time Polymorphism
-
-Constructor overloading is used to demonstrate compile-time polymorphism.
-
-Static Members
-
-A static booking counter is used to generate unique booking IDs.
-
-this Keyword
-
-The this pointer is used to refer to the current object.
-
-Composition
-
-Strong ownership relationships are demonstrated through:
-
-Cinema → Screen → Seat
-Show → ShowSeat
-Aggregation
-
-Independent objects are connected using aggregation, such as:
-
-Show → Movie
-Booking → ShowSeat
-Association
-
-Classes interact without owning each other's lifetime.
-
-📂 Project Structure
-
-The project follows the assignment requirement of one class per file and no header files.
+PROJECT STRUCTURE
+-----------------
 
 Movie-Ticket-Booking/
-│
-├── 01_Movie.cpp
-├── 02_Seat.cpp
-├── 03_Screen.cpp
-├── 04_Cinema.cpp
-├── 05_Show.cpp
-├── 06_ShowSeat.cpp
-├── 07_Customer.cpp
-├── 08_Booking.cpp
-├── 09_Payment.cpp
-├── 10_PaymentTypes.cpp
-├── 11_PriceCalculator.cpp
-├── 12_TicketPrinter.cpp
-├── 13_BookingService.cpp
-├── main.cpp
-│
-└── README.md
-🎟️ Booking Flow
+|
+|-- 01_Movie.cpp
+|-- 02_Seat.cpp
+|-- 03_Screen.cpp
+|-- 04_Cinema.cpp
+|-- 05_Show.cpp
+|-- 06_ShowSeat.cpp
+|-- 07_Customer.cpp
+|-- 08_Booking.cpp
+|-- 09_Payment.cpp
+|-- 10_PaymentTypes.cpp
+|-- 11_PriceCalculator.cpp
+|-- 12_TicketPrinter.cpp
+|-- 13_BookingService.cpp
+|-- main.cpp
+|
+|-- README.md
+
+The project uses .cpp files according to its current file-inclusion structure instead of the traditional .h and .cpp header-file structure.
+
+BOOKING FLOW
+------------
+
 Select Movie
-     ↓
+     |
 Select Show
-     ↓
+     |
 Select Seat(s)
-     ↓
+     |
 Validate Seats
-     ↓
+     |
 Calculate Price
-     ↓
-Select Payment
-     ↓
+     |
+Select Payment Method
+     |
 Make Payment
-     ↓
+     |
 Confirm Booking
-     ↓
+     |
 Print Ticket
-⚠️ Edge Cases
-1. Already Booked Seat
 
-If a selected seat is already booked:
+EDGE CASES
+----------
 
+Already-Booked Seat:
 Seat is already BOOKED.
 Booking rejected.
 
-The system does not change the availability of other seats.
-
-2. Invalid Seat
-
-If an invalid seat number is entered:
-
+Invalid Seat:
 Invalid seat.
 Please enter a valid seat number.
 
-The program continues running without crashing.
-
-3. Failed Payment
-
-If payment fails:
-
+Failed Payment:
 Payment failed.
 Selected seats are released.
 
-The booking is not confirmed.
-
-4. Cancellation
-
-When a confirmed booking is cancelled:
-
+Booking Cancellation:
 Booking cancelled successfully.
 Seats are AVAILABLE again.
-⚙️ How to Run
-Prerequisites
-C++ compiler
-GCC / MinGW / Visual Studio C++
-C++17 or later
-Terminal or Command Prompt
+
+HOW TO RUN
+----------
+
+Prerequisites:
+- C++ compiler
+- GCC, MinGW, or Visual Studio C++
+- C++17 or later
+- Terminal or Command Prompt
 
 Check GCC installation:
-
 g++ --version
-Compile
 
-From the project folder, run:
-
+Compile:
 g++ -std=c++17 main.cpp -o moviebooking
 
-For compiler warnings:
-
+Compile with warnings:
 g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o moviebooking
-Run on Windows
+
+Run on Windows:
 .\moviebooking.exe
-Run on Linux/macOS
+
+Run on Linux or macOS:
 ./moviebooking
 
-Note: The project uses .cpp files according to its current file-inclusion structure instead of a traditional .h/.cpp header structure.
+DELIBERATELY NOT IMPLEMENTED
+----------------------------
 
-🚫 Deliberately Not Implemented
+This project is intentionally designed as a small, single-cinema educational console application.
 
-The project is intentionally designed as a small, single-cinema educational console application.
+- Database or persistent storage
+- User login and authentication
+- Real online payment gateway
+- Email or SMS ticket delivery
+- Multi-cinema support
+- Graphical User Interface
+- Online ticket synchronization
 
-The following features are outside the project scope:
+The main focus remains on movies, shows, seats, bookings, payments, ticket printing, and cancellation.
 
-Database / persistent storage
-User login and authentication
-Real online payment gateway
-Email or SMS delivery
-Multi-cinema support
-Graphical User Interface
-Online ticket synchronization
-
-The focus remains on:
-
-Movies
-Shows
-Seats
-Booking
-Payment
-Ticket Printing
-Cancellation
-🎯 Learning Outcomes
+LEARNING OUTCOMES
+-----------------
 
 This project demonstrates practical understanding of:
+- System design
+- Requirement analysis
+- UML modeling
+- Object-Oriented Programming
+- SOLID principles
+- C++ modular design
+- Class relationships
+- Composition and aggregation
+- Inheritance and polymorphism
+- Booking and payment workflows
+- Input validation
 
-System Design
-Requirement Analysis
-UML Diagrams
-Object-Oriented Programming
-SOLID Principles
-C++ Modular Design
-Class Relationships
-Composition & Aggregation
-Inheritance & Polymorphism
-Booking and Payment Workflow
-Input Validation
-🧪 Test Cases
-Test Case	Expected Result
-Book available seat	Booking confirmed
-Book already-booked seat	Booking rejected
-Enter invalid seat	Error message displayed
-Successful UPI payment	Ticket generated
-Successful Card payment	Ticket generated
-Successful Cash payment	Ticket generated
-Failed payment	Seats released
-Cancel confirmed booking	Seats become available
-Invalid menu option	Program continues safely
-📋 Assignment Submission Checklist
- Functional Requirements
- Non-Functional Requirements
- Noun–Verb Analysis
- Class Responsibility Analysis
- Relationship Analysis
- Class Diagram
- Sequence Diagram
- Modular C++ Source Files
- Successful Booking Flow
- Already-Booked Seat Handling
- Failed Payment Handling
- Cancellation Flow
- SOLID Principles
- OOP Concepts
- README Documentation
-👨‍💻 Author
+TEST CASES
+----------
+
+- Book an available seat: Booking confirmed
+- Book an already-booked seat: Booking rejected
+- Enter an invalid seat: Error message displayed
+- Successful UPI payment: Ticket generated
+- Successful Card payment: Ticket generated
+- Successful Cash payment: Ticket generated
+- Failed payment: Selected seats released
+- Cancel a confirmed booking: Seats become available
+- Enter an invalid menu option: Program continues safely
+
+ASSIGNMENT SUBMISSION CHECKLIST
+-------------------------------
+
+[X] Functional requirements
+[X] Non-functional requirements
+[X] Noun-verb analysis
+[X] Class responsibility analysis
+[X] Relationship analysis
+[X] Class diagram
+[X] Sequence diagram
+[X] Modular C++ source files
+[X] Successful booking flow
+[X] Already-booked seat handling
+[X] Failed payment handling
+[X] Booking cancellation flow
+[X] SOLID principles
+[X] OOP concepts
+[X] README documentation
+
+AUTHOR
+------
 
 Aman Kumar
+B.Tech CSE - Semester 5
+TCS-504 System Design Assignment - 1
 
-B.Tech CSE — Semester 5
-
-System Design Assignment — 1
-
-📌 Project Summary
+PROJECT SUMMARY
+---------------
 
 The Movie Ticket Booking System is a C++ console application designed to demonstrate how real-world movie booking requirements can be transformed into a structured object-oriented system design.
 
-The project combines requirements analysis, UML modeling, class relationships, OOP principles, SOLID principles, payment abstraction, seat management, booking workflows, and practical C++ implementation in a single educational system.
+The project combines requirements analysis, UML modeling, Object-Oriented Programming, SOLID principles, payment abstraction, seat management, booking workflows, class relationships, input validation, and practical modular C++ implementation.
+
+It provides a complete educational example of a small movie booking system with movie selection, show selection, seat booking, payment processing, ticket printing, and booking cancellation.
