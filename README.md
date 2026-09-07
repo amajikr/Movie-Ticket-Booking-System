@@ -278,25 +278,6 @@ TEST CASES
 - Cancel a confirmed booking: Seats become available
 - Enter an invalid menu option: Program continues safely
 
-ASSIGNMENT SUBMISSION CHECKLIST
--------------------------------
-
-[X] Functional requirements
-[X] Non-functional requirements
-[X] Noun-verb analysis
-[X] Class responsibility analysis
-[X] Relationship analysis
-[X] Class diagram
-[X] Sequence diagram
-[X] Modular C++ source files
-[X] Successful booking flow
-[X] Already-booked seat handling
-[X] Failed payment handling
-[X] Booking cancellation flow
-[X] SOLID principles
-[X] OOP concepts
-[X] README documentation
-
 AUTHOR
 ------
 
